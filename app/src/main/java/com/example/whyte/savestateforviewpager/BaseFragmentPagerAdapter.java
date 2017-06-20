@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Whyte on 2017/6/20.
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 public abstract class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    protected ArrayList<Fragment> mFragments = new ArrayList<>();
+    protected List<Fragment> mFragments = new ArrayList<>();
     private FragmentManager fragmentManager;
 
 
@@ -45,11 +46,11 @@ public abstract class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
     public abstract void initFragments();
 
     /**
-     * 保存时fragment tag前缀
+     * 保存fragment和获取fragment使用的key
      *
      * @return
      */
-    protected abstract String getTagPrefix();
+    protected abstract String getKey();
 
     /**
      * fragment的个数，使用常量
@@ -63,7 +64,7 @@ public abstract class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
      */
     public void restoreFragments(Bundle savedInstanceState) {
         for (int i = 0; i < getFragmentCount(); i++) {
-            Fragment fragment = fragmentManager.getFragment(savedInstanceState, getTagPrefix() + i);
+            Fragment fragment = fragmentManager.getFragment(savedInstanceState, getKey() + i);
             addFragment(fragment);
         }
     }
@@ -76,7 +77,7 @@ public abstract class BaseFragmentPagerAdapter extends FragmentPagerAdapter {
     public void saveFragments(Bundle outState) {
         for (int i = 0; i < getFragmentCount(); i++) {
             if (i < mFragments.size()) {
-                fragmentManager.putFragment(outState, getTagPrefix() + i, getItem(i));
+                fragmentManager.putFragment(outState, getKey() + i, getItem(i));
             }
         }
     }

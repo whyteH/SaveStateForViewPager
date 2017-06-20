@@ -24,7 +24,7 @@ public class MainPagerAdapter extends BaseFragmentPagerAdapter {
     }
 
     @Override
-    protected String getTagPrefix() {
+    protected String getKey() {
         return "tab:";
     }
 
